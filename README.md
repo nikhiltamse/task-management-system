@@ -33,3 +33,8 @@ A Spring Boot microservices project for managing users and tasks.
    Login: POST http://localhost:8080/users/login
    
    Create Task: POST http://localhost:8080/tasks (with Bearer token)
+
+   ### Features
+- User registration and JWT login.
+- Task CRUD (create, read, update, delete) with JWT authentication.
+- React frontend with task management UI.
