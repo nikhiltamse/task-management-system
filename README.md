@@ -16,3 +16,12 @@ A Spring Boot microservices project for managing users and tasks.
    \c task_management_db
    CREATE SCHEMA users_schema;
    CREATE SCHEMA tasks_schema;
+3.**Run**:
+   cd eureka-server && mvn spring-boot:run
+   cd gateway-service && mvn spring-boot:run
+   cd user-service && mvn spring-boot:run
+   cd task-service && mvn spring-boot:run
+4.**Test**:
+   Register: POST http://localhost:8080/users/register
+   Login: POST http://localhost:8080/users/login
+   Create Task: POST http://localhost:8080/tasks (with Bearer token)
