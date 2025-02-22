@@ -17,6 +17,7 @@ A Spring Boot microservices project for managing users and tasks.
    CREATE SCHEMA users_schema;
    CREATE SCHEMA tasks_schema;
 3.**Run**:
+
    cd eureka-server && mvn spring-boot:run
    
    cd gateway-service && mvn spring-boot:run
@@ -26,6 +27,7 @@ A Spring Boot microservices project for managing users and tasks.
    cd task-service && mvn spring-boot:run
    
 4.**Test**:
+
    Register: POST http://localhost:8080/users/register
    
    Login: POST http://localhost:8080/users/login
