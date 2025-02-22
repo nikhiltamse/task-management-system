@@ -21,6 +21,7 @@ A Spring Boot microservices project for managing users and tasks.
    cd gateway-service && mvn spring-boot:run
    cd user-service && mvn spring-boot:run
    cd task-service && mvn spring-boot:run
+   
 4.**Test**:
    Register: POST http://localhost:8080/users/register
    Login: POST http://localhost:8080/users/login
