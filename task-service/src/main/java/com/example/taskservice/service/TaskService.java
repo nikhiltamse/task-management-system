@@ -5,6 +5,7 @@ import com.example.taskservice.entity.Task;
 import com.example.taskservice.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,16 +19,16 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     public TaskDTO createTask(TaskDTO taskDTO) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Task task = new Task(taskDTO.getTitle(), taskDTO.getDescription(), taskDTO.getStatus(), taskDTO.getUserId());
         Task savedTask = taskRepository.save(task);
         return new TaskDTO(savedTask.getId(), savedTask.getTitle(), savedTask.getDescription(), savedTask.getStatus(), savedTask.getUserId());
     }
 
-    public List<TaskDTO> getTasksByUserId(Long userId) {
-        List<Task> tasks = taskRepository.findByUserId(userId);
-        if (tasks.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No tasks found for user ID: " + userId);
-        }
+    public List<TaskDTO> getTasksByUserId(Long userId, String status) {
+        List<Task> tasks = (status != null && !status.isEmpty()) ?
+                taskRepository.findByUserIdAndStatus(userId, status) :
+                taskRepository.findByUserId(userId);
         return tasks.stream()
                 .map(task -> new TaskDTO(task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), task.getUserId()))
                 .collect(Collectors.toList());
@@ -53,5 +54,11 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found with ID: " + id));
         taskRepository.delete(task);
+    }
+
+    public List<TaskDTO> getAllTasks() {
+        return taskRepository.findAll().stream()
+                .map(task -> new TaskDTO(task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), task.getUserId()))
+                .collect(Collectors.toList());
     }
 }
