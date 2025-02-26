@@ -9,6 +9,7 @@ import Tasks from './components/Tasks';
 import AdminUsers from './components/AdminUsers';
 import AdminTasks from './components/AdminTasks';
 import Profile from './components/Profile';
+import Dashboard from './components/Dashboard';
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
@@ -66,7 +67,7 @@ function App() {
           <Route path="/profile" element={<Profile token={token} />} />
           <Route path="/admin/users" element={<AdminUsers token={token} />} />
           <Route path="/admin/tasks" element={<AdminTasks token={token} />} />
-          <Route path="/" element={<h2 className="text-center">Welcome to Task Manager</h2>} />
+          <Route path="/" element={<Dashboard token={token} />} />
         </Routes>
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       </Container>
